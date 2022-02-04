@@ -1,8 +1,5 @@
 name: Bash CLI Actions
-on:
-  push:
-    paths:
-      -'bash-cli/**'
+on: [push]
 jobs:
   build-test-style:
     strategy:
