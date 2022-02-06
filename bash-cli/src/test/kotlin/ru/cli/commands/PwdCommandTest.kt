@@ -24,23 +24,15 @@ class PwdCommandTest {
 
     @Test
     fun withoutArguments() {
-        val process = ProcessBuilder("pwd").start()
-        process.waitFor()
-
-        val expected = String(process.inputStream.readAllBytes())
+        val expected = System.getProperty("user.dir") + '\n'
         val tested = calculate(listOf())
-
         Assertions.assertEquals(expected, tested)
     }
 
     @Test
     fun withArguments() {
-        val process = ProcessBuilder("pwd").start()
-        process.waitFor()
-
-        val expected = String(process.inputStream.readAllBytes())
+        val expected = System.getProperty("user.dir") + '\n'
         val tested = calculate(listOf("hse", "spb"))
-
         Assertions.assertEquals(expected, tested)
     }
 }
