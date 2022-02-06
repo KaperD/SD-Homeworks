@@ -26,7 +26,7 @@ class EchoCommandTest {
 
     @Test
     fun oneWordTest() {
-        val expected = listOf("rfvrev", "")
+        val expected = listOf("rfvrev" + System.lineSeparator(), "")
 
         val tested = calculate(listOf("rfvrev"))
         Assertions.assertEquals(expected, tested)
@@ -34,7 +34,7 @@ class EchoCommandTest {
 
     @Test
     fun multipleWordTest() {
-        val expected = listOf("rfvrev eetetg", "")
+        val expected = listOf("rfvrev eetetg" + System.lineSeparator(), "")
 
         val tested = calculate(listOf("rfvrev", "eetetg"))
         Assertions.assertEquals(expected, tested)

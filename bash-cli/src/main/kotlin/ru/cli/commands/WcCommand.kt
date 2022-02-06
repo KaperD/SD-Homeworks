@@ -67,7 +67,7 @@ class WcCommand(override val args: List<String>) : Command {
         output.write(toBrilliantString(statistics.wordsNumber).toByteArray())
         output.write(toBrilliantString(statistics.bytesNumber).toByteArray())
         if (label != null) {
-            output.write(" $label\n".toByteArray())
+            output.write(" $label${System.lineSeparator()}".toByteArray())
         }
     }
 

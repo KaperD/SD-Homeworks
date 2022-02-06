@@ -18,7 +18,7 @@ class EchoCommand(override val args: List<String>) : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
-        out.write(args.joinToString(" ").toByteArray())
+        out.write((args.joinToString(" ") + System.lineSeparator()).toByteArray())
         return ReturnCode.SUCCESS
     }
 }

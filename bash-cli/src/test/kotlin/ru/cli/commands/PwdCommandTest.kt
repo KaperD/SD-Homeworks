@@ -24,14 +24,14 @@ class PwdCommandTest {
 
     @Test
     fun withoutArguments() {
-        val expected = System.getProperty("user.dir") + '\n'
+        val expected = System.getProperty("user.dir") + System.lineSeparator()
         val tested = calculate(listOf())
         Assertions.assertEquals(expected, tested)
     }
 
     @Test
     fun withArguments() {
-        val expected = System.getProperty("user.dir") + '\n'
+        val expected = System.getProperty("user.dir") + System.lineSeparator()
         val tested = calculate(listOf("hse", "spb"))
         Assertions.assertEquals(expected, tested)
     }
