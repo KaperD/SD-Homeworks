@@ -18,14 +18,7 @@ class EchoCommand(private val args: List<String>) : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
-        val builder = StringBuilder()
-
-        for (arg in args) {
-            builder.append(arg)
-        }
-        builder.append('\n')
-
-        out.write(builder.toString().toByteArray())
+        out.write(args.joinToString(" ").toByteArray())
         return ReturnCode.SUCCESS
     }
 }
