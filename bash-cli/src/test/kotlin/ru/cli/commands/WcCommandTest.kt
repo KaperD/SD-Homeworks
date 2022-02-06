@@ -27,21 +27,39 @@ class WcCommandTest {
 
     @Test
     fun emptyFileTest() {
-        val expected = Path("src", "test", "resources", "wc-empty-file.out").readText()
+        val os = System.getProperty("os.name")
+        val expected = if (os.indexOf("win", ignoreCase = true) >= 0) {
+            Path("src", "test", "resources", "wc-windows-empty-file.out").readText()
+        } else {
+            Path("src", "test", "resources", "wc-unix-empty-file.out").readText()
+        }
+
         val tested = calculate(listOf(Path("src", "test", "resources", "empty-file.txt").pathString))
         Assertions.assertEquals(expected, tested)
     }
 
     @Test
     fun loremIpsumTest() {
-        val expected = Path("src", "test", "resources", "wc-lorem-ipsum.out").readText()
+        val os = System.getProperty("os.name")
+        val expected = if (os.indexOf("win", ignoreCase = true) >= 0) {
+            Path("src", "test", "resources", "wc-windows-lorem-ipsum.out").readText()
+        } else {
+            Path("src", "test", "resources", "wc-unix-lorem-ipsum.out").readText()
+        }
+
         val tested = calculate(listOf(Path("src", "test", "resources", "lorem-ipsum.txt").pathString))
         Assertions.assertEquals(expected, tested)
     }
 
     @Test
     fun twoFilesTest() {
-        val expected = Path("src", "test", "resources", "wc-two-files.out").readText()
+        val os = System.getProperty("os.name")
+        val expected = if (os.indexOf("win", ignoreCase = true) >= 0) {
+            Path("src", "test", "resources", "wc-windows-two-files.out").readText()
+        } else {
+            Path("src", "test", "resources", "wc-unix-two-files.out").readText()
+        }
+
         val tested = calculate(
             listOf(
                 Path("src", "test", "resources", "lorem-ipsum.txt").pathString,
