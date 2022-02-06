@@ -35,7 +35,7 @@ object Parser {
      */
     fun parseAssignmentCommand(line: String): List<String> {
         val strList = mutableListOf<String>()
-        val regex = "^([a-zA-Z_]+)=((\\S+)|\'(.+)\'|\"(.+)\")$" // (1)=(2 (3) | ('4') | ("5"))
+        val regex = "^([a-zA-Z_]+)=(([^\\s\'\"]+)|\'(.+)\'|\"(.+)\")$" // (1)=(2 (3) | ('4') | ("5"))
         val m: Matcher = Pattern.compile(regex).matcher(line)
 
         if (m.find()) {
