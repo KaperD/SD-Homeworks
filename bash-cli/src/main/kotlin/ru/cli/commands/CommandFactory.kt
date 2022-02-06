@@ -4,6 +4,9 @@ import ru.cli.Parser
 import ru.cli.QuottingType
 import ru.cli.Token
 
+/**
+ * This class provides methods for creating a command from list of tokens
+ */
 object CommandFactory {
     private val supportedCommands: Map<String, (List<String>) -> Command> = mapOf(
         "pwd" to ::PwdCommand,
@@ -13,6 +16,12 @@ object CommandFactory {
         "exit" to ::ExitCommand
     )
 
+    /**
+     * Create one of supported commands, external command if command name not supported or assignment command
+     * @param args list of tokens
+     *
+     * @return the created command
+     */
     fun getCommand(args: List<Token>): Command {
         val commandName = args[0].value
         if ('=' in commandName && args[0].quottingType == QuottingType.WITHOUT_QUOTE) {
