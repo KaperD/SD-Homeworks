@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
-import kotlin.io.path.*
+import kotlin.io.path.Path
+import kotlin.io.path.pathString
+import kotlin.io.path.readText
 
 class WcCommandTest {
     private fun calculate(files: List<String>): String {
@@ -40,10 +42,12 @@ class WcCommandTest {
     @Test
     fun twoFilesTest() {
         val expected = Path("src", "test", "resources", "wc-two-files.out").readText()
-        val tested = calculate(listOf(
-            Path("src", "test", "resources", "lorem-ipsum.txt").pathString,
-            Path("src", "test", "resources", "forest-gump.txt").pathString
-        ))
+        val tested = calculate(
+            listOf(
+                Path("src", "test", "resources", "lorem-ipsum.txt").pathString,
+                Path("src", "test", "resources", "forest-gump.txt").pathString
+            )
+        )
         Assertions.assertEquals(expected, tested)
     }
 }
