@@ -18,20 +18,25 @@ class ExternalCommand(private val args: List<String>) : Command {
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         val processBuilder = ProcessBuilder(args)
+
         if (input == System.`in`) {
             processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT)
         }
+
         val process = processBuilder.start()
         if (input != System.`in`) {
             process.outputStream.write(input.readAllBytes())
-            process.outputStream.close()
+            process.outputStream.flush()
         }
+
         process.inputStream.transferTo(out)
         process.errorStream.transferTo(error)
+
         val result = process.waitFor()
         if (result == 0) {
             return ReturnCode.SUCCESS
         }
+
         return ReturnCode.EXIT
     }
 }

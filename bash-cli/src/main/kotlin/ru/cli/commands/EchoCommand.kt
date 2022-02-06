@@ -7,7 +7,7 @@ import java.io.OutputStream
  * This class provides `echo` unix command functionality.
  * `echo` is a command that outputs the strings that are passed to it as arguments
  */
-class EcoCommand(private val args: List<String>) : Command {
+class EchoCommand(private val args: List<String>) : Command {
     /**
      * Executes `echo` command
      *
@@ -19,9 +19,12 @@ class EcoCommand(private val args: List<String>) : Command {
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         val builder = StringBuilder()
+
         for (arg in args) {
             builder.append(arg)
         }
+        builder.append('\n')
+
         out.write(builder.toString().toByteArray())
         return ReturnCode.SUCCESS
     }

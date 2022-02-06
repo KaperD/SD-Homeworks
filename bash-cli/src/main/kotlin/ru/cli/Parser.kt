@@ -25,4 +25,9 @@ object Parser {
         }
         return tokenList
     }
+
+    fun parseAssignmentCommand(command: String): List<String> {
+        // x="1" -> {x, 1}
+        TODO()
+    }
 }

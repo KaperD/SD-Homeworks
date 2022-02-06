@@ -7,7 +7,7 @@ import java.io.OutputStream
 /**
  * This class provides assignment to the environment variable
  */
-class AssignmentCommand(private val args: List<String>)  : Command {
+class AssignmentCommand(private val args: List<String>) : Command {
     /**
      * Executes assignment to the environment variable
      *

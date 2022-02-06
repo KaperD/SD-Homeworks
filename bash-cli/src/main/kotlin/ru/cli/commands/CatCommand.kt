@@ -30,7 +30,7 @@ class CatCommand(private val args: List<String>) : Command {
                 out.write(file.readBytes())
             } else {
                 error.write(("$filename: No such file or directory").toByteArray())
-               return ReturnCode.ERROR
+                return ReturnCode.ERROR
             }
         }
         return ReturnCode.SUCCESS

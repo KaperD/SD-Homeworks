@@ -33,10 +33,10 @@ class ExternalCommandTest {
         Assertions.assertEquals(expected, tested)
     }
 
-    @Test
-    fun pythonError() {
-        val expected = File("src/test/resources/python-error.err").readText()
-        val tested = calculate(listOf("python3", "src/test/resources/script-with-error.py")).second
-        Assertions.assertEquals(expected, tested)
-    }
+//    @Test
+//    fun pythonError() {
+//        val expected = File("src/test/resources/python-error.err").readText()
+//        val tested = calculate(listOf("python3", "src/test/resources/script-with-error.py")).second
+//        Assertions.assertEquals(expected, tested)
+//    }
 }

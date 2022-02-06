@@ -80,27 +80,11 @@ class WcCommand(private val args: List<String>) : Command {
     }
 
     private fun getLinesNumber(text: String): Int {
-        var result = 0
-        for (symbol in text) {
-            if (symbol == '\n') {
-                result++
-            }
-        }
-        return result
+        return text.count { it == '\n' }
     }
 
     private fun getWordsNumber(text: String): Int {
-        var result = 0
-        val spaces = arrayOf(' ', '\n')
-        for (pointer in 0 until text.length - 1) {
-            if (text[pointer] !in spaces && text[pointer + 1] in spaces) {
-                result++
-            }
-        }
-        if (text.isNotEmpty() && text[text.length - 1] !in spaces) {
-            result++
-        }
-        return result
+        return text.split(' ', '\n').filter { it.isNotEmpty() }.size
     }
 
     private fun getBytesNumber(text: String): Int {
