@@ -8,7 +8,7 @@ import java.io.OutputStream
  * This class provides `cat` unix command functionality.
  * `cat` is a standard Unix utility that reads files sequentially, writing them to standard output
  */
-class CatCommand(private val args: List<String>) : Command {
+class CatCommand(override val args: List<String>) : Command {
     /**
      * Executes `cat` command
      *

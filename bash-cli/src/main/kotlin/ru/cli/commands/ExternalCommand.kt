@@ -6,7 +6,7 @@ import java.io.OutputStream
 /**
  * This class provides execution of any external command
  */
-class ExternalCommand(private val args: List<String>) : Command {
+class ExternalCommand(override val args: List<String>) : Command {
     /**
      * Executes the specified external command
      *

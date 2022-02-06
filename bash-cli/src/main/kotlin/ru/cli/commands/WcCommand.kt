@@ -8,7 +8,7 @@ import java.io.OutputStream
  * This class provides `wc` unix command functionality.
  * `wc`(word count) is a utility that gives the following statistics: newline count, word count and byte count
  */
-class WcCommand(private val args: List<String>) : Command {
+class WcCommand(override val args: List<String>) : Command {
     /**
      * Executes `wc` command with the specified arguments
      *

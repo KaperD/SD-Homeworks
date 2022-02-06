@@ -7,7 +7,7 @@ import java.io.OutputStream
  * This class provides `pwd` unix command functionality.
  * `pwd`(print working directory) is a utility that gives the full pathname of the current working directory
  */
-class PwdCommand(private val args: List<String>) : Command {
+class PwdCommand(override val args: List<String>) : Command {
     /**
      * Executes `pwd` command
      *

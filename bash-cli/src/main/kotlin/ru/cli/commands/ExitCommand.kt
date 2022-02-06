@@ -6,7 +6,7 @@ import java.io.OutputStream
 /**
  * This class provides exit from interpreter
  */
-class ExitCommand(private val args: List<String>) : Command {
+class ExitCommand(override val args: List<String>) : Command {
     /**
      * Exits from interpreter
      *

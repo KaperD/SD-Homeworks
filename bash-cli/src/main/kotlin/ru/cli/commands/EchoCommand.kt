@@ -7,7 +7,7 @@ import java.io.OutputStream
  * This class provides `echo` unix command functionality.
  * `echo` is a command that outputs the strings that are passed to it as arguments
  */
-class EchoCommand(private val args: List<String>) : Command {
+class EchoCommand(override val args: List<String>) : Command {
     /**
      * Executes `echo` command
      *

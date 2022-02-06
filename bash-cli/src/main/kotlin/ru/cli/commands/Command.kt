@@ -16,6 +16,7 @@ enum class ReturnCode {
  * Provides interface for all supported commands
  */
 interface Command {
+    val args: List<String>
     /**
      * Executes command
      *
