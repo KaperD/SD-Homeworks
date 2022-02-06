@@ -3,7 +3,6 @@ package ru.cli
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
 object Parser {
     fun splitIntoTokens(commandStr: String): List<Token> {
         val tokenList = mutableListOf<Token>()
