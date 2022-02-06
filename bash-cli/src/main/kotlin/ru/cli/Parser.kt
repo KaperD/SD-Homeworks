@@ -10,16 +10,20 @@ object Parser {
     private val assignmentRegex = "^([a-zA-Z_]+)=(([^\\s\'\"]+)|\'([^\']*)\'|\"([^\"]*)\")$" // (1)=(2 (3) | ('4') | ("5"))
 
     /**
-     * returns list of tokens
-     * token matches regexp "\'([^\']*)\'|\"([^\"]*)\"|([^\\s\'\"]+)"
+     * Returns list of tokens
+     * token matches regexp "\'([^\']*)\'|\"([^\"]*)\"|(($assignmentRegex)|[^\s'"]+)"
+     *
+     * @param line the input string
+     *
+     * @return list of tokens
      */
-    fun splitIntoTokens(commandStr: String): List<Token> {
+    fun splitIntoTokens(line: String): List<Token> {
         val tokenList = mutableListOf<Token>()
         val regex = "\'([^\']*)\'|" + // '(1)'
             "\"([^\"]*)\"|" + // "(2)"
             "(($assignmentRegex)|[^\\s\'\"]+)" // (3)
         val quottingTypes = listOf(QuottingType.SINGLE_QUOTE, QuottingType.DOUBLE_QUOTE, QuottingType.WITHOUT_QUOTE)
-        val m: Matcher = Pattern.compile(regex).matcher(commandStr)
+        val m: Matcher = Pattern.compile(regex).matcher(line)
 
         while (m.find()) {
             listOf(1, 2, 3)
@@ -35,7 +39,11 @@ object Parser {
     }
 
     /**
-     * returns list arguments for assignment (name and value), separated by '='
+     * Returns list arguments for assignment (name and value), separated by '='
+     *
+     * @param line the input string
+     *
+     * @return list of 2 elements: name and value
      */
     fun parseAssignmentCommand(line: String): List<String> {
         val strList = mutableListOf<String>()
