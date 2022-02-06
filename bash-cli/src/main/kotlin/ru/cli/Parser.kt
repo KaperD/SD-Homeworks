@@ -4,30 +4,50 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
- * This class provides methods for tokenization
+ * This class provides methods for tokenization and parsing assignment
  */
 object Parser {
     /**
      * returns list of tokens
+     * token matches regexp "\'([^\']*)\'|\"([^\"]*)\"|([^\\s\'\"]+)"
      */
     fun splitIntoTokens(commandStr: String): List<Token> {
         val tokenList = mutableListOf<Token>()
-        val regex = "\'([^\']*)\'|\"([^\"]*)\"|(\\S+)"
+        val regex = "\'([^\']*)\'|\"([^\"]*)\"|([^\\s\'\"]+)" // ('1') | ("2") | (3)
+        val quottingTypes = listOf(QuottingType.SINGLE_QUOTE, QuottingType.DOUBLE_QUOTE, QuottingType.WITHOUT_QUOTE)
         val m: Matcher = Pattern.compile(regex).matcher(commandStr)
+
         while (m.find()) {
-            if (m.group(1) != null) {
-                tokenList.add(Token(m.group(1).toString(), QuottingType.SINGLE_QUOTE))
-            } else if (m.group(2) != null) {
-                tokenList.add(Token(m.group(2).toString(), QuottingType.DOUBLE_QUOTE))
-            } else {
-                tokenList.add(Token(m.group(3).toString(), QuottingType.WITHOUT_QUOTE))
-            }
+            listOf(1, 2, 3)
+                .filter { m.group(it) != null }
+                .forEach {
+                    tokenList.add(
+                        Token(m.group(it).toString(), quottingTypes[it - 1])
+                    )
+                }
         }
+
         return tokenList
     }
 
-    fun parseAssignmentCommand(command: String): List<String> {
-        // x="1" -> {x, 1}
-        TODO()
+    /**
+     * returns list arguments for assignment (name and value), separated by '='
+     */
+    fun parseAssignmentCommand(line: String): List<String> {
+        val strList = mutableListOf<String>()
+        val regex = "^([a-zA-Z_]+)=((\\S+)|\'(.+)\'|\"(.+)\")$" // (1)=(2 (3) | ('4') | ("5"))
+        val m: Matcher = Pattern.compile(regex).matcher(line)
+
+        if (m.find()) {
+            listOf(1, 3, 4, 5)
+                .filter { m.group(it) != null }
+                .forEach { strList.add(m.group(it).toString()) }
+        }
+
+        if (strList.size != 2) {
+            throw IllegalArgumentException("Invalid assigment")
+        }
+
+        return strList
     }
 }
