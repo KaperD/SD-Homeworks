@@ -18,11 +18,6 @@ class EcoCommand(private val args: List<String>) : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
-        if (args.isEmpty()) {
-            error.write(("Not enough arguments").toByteArray())
-            return ReturnCode.ERROR
-        }
-
         val builder = StringBuilder()
         for (arg in args) {
             builder.append(arg)

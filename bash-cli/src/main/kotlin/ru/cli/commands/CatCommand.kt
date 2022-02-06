@@ -20,18 +20,19 @@ class CatCommand(private val args: List<String>) : Command {
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         if (args.isEmpty()) {
-            error.write(("Not enough arguments").toByteArray())
-            return ReturnCode.ERROR
+            out.write(input.readAllBytes())
+            return ReturnCode.SUCCESS
         }
 
-        val filename = args[0]
-        val file = File(filename)
-        return if (file.exists()) {
-            out.write(file.readBytes())
-            ReturnCode.SUCCESS
-        } else {
-            error.write(("$filename: No such file or directory").toByteArray())
-            ReturnCode.ERROR
+        for (filename in args) {
+            val file = File(filename)
+            if (file.exists()) {
+                out.write(file.readBytes())
+            } else {
+                error.write(("$filename: No such file or directory").toByteArray())
+               return ReturnCode.ERROR
+            }
         }
+        return ReturnCode.SUCCESS
     }
 }

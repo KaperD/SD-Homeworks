@@ -18,8 +18,8 @@ class AssignmentCommand(private val args: List<String>)  : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
-        if (args.size < 2) {
-            error.write(("Not enough arguments").toByteArray())
+        if (args.size != 2) {
+            error.write(("Wrong number of arguments").toByteArray())
             return ReturnCode.ERROR
         }
 
