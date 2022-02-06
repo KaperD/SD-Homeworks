@@ -11,7 +11,7 @@ object CommandFactory {
         "exit" to { _ -> ExitCommand(listOf()) }
     )
 
-    fun getCommand(args: List<String>): Command {
+    fun getCommand(args: List<Token>): Command {
         TODO()
     }
 }

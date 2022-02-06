@@ -1,0 +1,4 @@
+  File "/Users/andreyshspb/idea/SD-Homeworks/bash-cli/src/test/resources/script-with-error.py", line 2
+
+    ^
+SyntaxError: unexpected EOF while parsing
