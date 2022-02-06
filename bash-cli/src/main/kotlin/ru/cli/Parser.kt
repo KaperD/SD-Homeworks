@@ -7,13 +7,17 @@ import java.util.regex.Pattern
  * This class provides methods for tokenization and parsing assignment
  */
 object Parser {
+    private val assignmentRegex = "^([a-zA-Z_]+)=(([^\\s\'\"]+)|\'([^\']*)\'|\"([^\"]*)\")$" // (1)=(2 (3) | ('4') | ("5"))
+
     /**
      * returns list of tokens
      * token matches regexp "\'([^\']*)\'|\"([^\"]*)\"|([^\\s\'\"]+)"
      */
     fun splitIntoTokens(commandStr: String): List<Token> {
         val tokenList = mutableListOf<Token>()
-        val regex = "\'([^\']*)\'|\"([^\"]*)\"|([^\\s\'\"]+)" // ('1') | ("2") | (3)
+        val regex = "\'([^\']*)\'|" + // '(1)'
+            "\"([^\"]*)\"|" + // "(2)"
+            "(($assignmentRegex)|[^\\s\'\"]+)" // (3)
         val quottingTypes = listOf(QuottingType.SINGLE_QUOTE, QuottingType.DOUBLE_QUOTE, QuottingType.WITHOUT_QUOTE)
         val m: Matcher = Pattern.compile(regex).matcher(commandStr)
 
@@ -35,8 +39,7 @@ object Parser {
      */
     fun parseAssignmentCommand(line: String): List<String> {
         val strList = mutableListOf<String>()
-        val regex = "^([a-zA-Z_]+)=(([^\\s\'\"]+)|\'(.+)\'|\"(.+)\")$" // (1)=(2 (3) | ('4') | ("5"))
-        val m: Matcher = Pattern.compile(regex).matcher(line)
+        val m: Matcher = Pattern.compile(assignmentRegex).matcher(line)
 
         if (m.find()) {
             listOf(1, 3, 4, 5)

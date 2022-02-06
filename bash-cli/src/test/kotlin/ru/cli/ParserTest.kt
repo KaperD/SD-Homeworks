@@ -84,8 +84,7 @@ class ParserTest {
         )
         Assertions.assertEquals(
             listOf(
-                Token("a=", QuottingType.WITHOUT_QUOTE),
-                Token("b  c", QuottingType.DOUBLE_QUOTE)
+                Token("a=\"b  c\"", QuottingType.WITHOUT_QUOTE)
             ),
             Parser.splitIntoTokens("a=\"b  c\"")
         )
@@ -129,5 +128,8 @@ class ParserTest {
         Assertions.assertThrows(
             IllegalArgumentException::class.java
         ) { Parser.parseAssignmentCommand("a=b b") }
+        Assertions.assertThrows(
+            IllegalArgumentException::class.java
+        ) { Parser.parseAssignmentCommand("a=\"b\" b\"") }
     }
 }
