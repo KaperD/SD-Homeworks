@@ -1,5 +1,5 @@
 package ru.cli
 
 object Environment {
-    val vars: Map<String, String> = HashMap()
+    val vars: MutableMap<String, String> = HashMap()
 }
