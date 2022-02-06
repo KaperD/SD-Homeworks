@@ -4,7 +4,20 @@ import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 
+/**
+ * This class provides `wc` unix command functionality.
+ * `wc`(word count) is a utility that gives the following statistics: newline count, word count and byte count
+ */
 class WcCommand(private val args: List<String>) : Command {
+    /**
+     * Executes `wc` command with the specified arguments
+     *
+     * @param input the input stream
+     * @param out the output stream
+     * @param error the error stream
+     *
+     * @return the execution code
+     */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         if (args.isEmpty()) {
             val text = String(input.readAllBytes())
@@ -48,6 +61,7 @@ class WcCommand(private val args: List<String>) : Command {
         }
         return string
     }
+
     private fun writeStatistics(output: OutputStream, statistics: Statistics, label: String? = null) {
         output.write(toBrilliantString(statistics.linesNumber).toByteArray())
         output.write(toBrilliantString(statistics.wordsNumber).toByteArray())
@@ -56,6 +70,7 @@ class WcCommand(private val args: List<String>) : Command {
             output.write(" $label\n".toByteArray())
         }
     }
+
     private fun getStatistics(text: String): Statistics {
         return Statistics(
             getLinesNumber(text),
@@ -73,6 +88,7 @@ class WcCommand(private val args: List<String>) : Command {
         }
         return result
     }
+
     private fun getWordsNumber(text: String): Int {
         var result = 0
         val spaces = arrayOf(' ', '\n')
@@ -86,6 +102,7 @@ class WcCommand(private val args: List<String>) : Command {
         }
         return result
     }
+
     private fun getBytesNumber(text: String): Int {
         return text.toByteArray().size
     }

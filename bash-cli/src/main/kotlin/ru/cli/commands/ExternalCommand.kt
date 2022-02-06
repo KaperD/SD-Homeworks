@@ -3,7 +3,19 @@ package ru.cli.commands
 import java.io.InputStream
 import java.io.OutputStream
 
+/**
+ * This class provides execution of any external command
+ */
 class ExternalCommand(private val args: List<String>) : Command {
+    /**
+     * Executes the specified external command
+     *
+     * @param input the input stream
+     * @param out the output stream
+     * @param error the error stream
+     *
+     * @return the execution code
+     */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         val processBuilder = ProcessBuilder(args)
         if (input == System.`in`) {
