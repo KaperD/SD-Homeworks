@@ -4,7 +4,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
- * This class provides methods for tokenization and substitution
+ * This class provides methods for tokenization
  */
 object Parser {
     /**
