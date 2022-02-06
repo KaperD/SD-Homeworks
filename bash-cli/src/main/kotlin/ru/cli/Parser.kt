@@ -3,7 +3,13 @@ package ru.cli
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+/**
+ * This class provides methods for tokenization and substitution
+ */
 object Parser {
+    /**
+     * returns list of tokens
+     */
     fun splitIntoTokens(commandStr: String): List<Token> {
         val tokenList = mutableListOf<Token>()
         val regex = "\'([^\']*)\'|\"([^\"]*)\"|(\\S+)"
