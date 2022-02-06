@@ -28,7 +28,10 @@ class ExternalCommand(private val args: List<String>) : Command {
         }
         process.inputStream.transferTo(out)
         process.errorStream.transferTo(error)
-        process.waitFor()
-        return ReturnCode.SUCCESS
+        val result = process.waitFor()
+        if (result == 0) {
+            return ReturnCode.SUCCESS
+        }
+        return ReturnCode.EXIT
     }
 }

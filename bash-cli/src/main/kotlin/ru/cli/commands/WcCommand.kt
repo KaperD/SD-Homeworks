@@ -97,7 +97,7 @@ class WcCommand(private val args: List<String>) : Command {
                 result++
             }
         }
-        if (text[text.length - 1] !in spaces) {
+        if (text.isNotEmpty() && text[text.length - 1] !in spaces) {
             result++
         }
         return result

@@ -23,6 +23,6 @@ class PwdCommand(private val args: List<String>) : Command {
     }
 
     private fun getCurrentDirectory(): String {
-        return System.getProperty("user.dir")
+        return System.getProperty("user.dir") + '\n'
     }
 }

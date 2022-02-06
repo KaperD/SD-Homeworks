@@ -19,3 +19,12 @@ tasks.named<JavaExec>("run") {
     standardInput = System.`in`
     standardOutput = System.out
 }
+
+dependencies {
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
