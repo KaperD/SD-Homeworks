@@ -1,5 +1,6 @@
 package ru.cli.commands
 
+import ru.cli.Environment
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -18,6 +19,11 @@ class ExternalCommand(override val args: List<String>) : Command {
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         val processBuilder = ProcessBuilder(args)
+        processBuilder.environment().let { env ->
+            Environment.vars.forEach {
+                env[it.key] = it.value
+            }
+        }
 
         if (input == System.`in`) {
             processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT)

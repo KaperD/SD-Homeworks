@@ -2,9 +2,11 @@ package ru.cli.commands
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import ru.cli.Environment
 import java.io.File
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
+import kotlin.test.assertEquals
 
 class ExternalCommandTest {
     private fun calculate(args: List<String>): Pair<String, String> {
@@ -38,5 +40,14 @@ class ExternalCommandTest {
         val expected = File("src/test/resources/python-error.err").readText()
         val tested = calculate(listOf("python3", "src/test/resources/script-with-error.py")).second
         Assertions.assertEquals(expected, tested)
+    }
+
+    @Test
+    fun pythonEnvironment() {
+        Environment.vars["key"] = "value"
+        val expected = File("src/test/resources/python-environment.out").readText()
+        val tested = calculate(listOf("python3", "src/test/resources/python-environment.py")).first
+        assertEquals(expected, tested)
+        Environment.vars.remove("key")
     }
 }
