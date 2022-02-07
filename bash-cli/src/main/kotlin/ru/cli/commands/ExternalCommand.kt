@@ -37,6 +37,6 @@ class ExternalCommand(override val args: List<String>) : Command {
             return ReturnCode.SUCCESS
         }
 
-        return ReturnCode.EXIT
+        return ReturnCode.ERROR
     }
 }
