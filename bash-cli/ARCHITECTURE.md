@@ -19,20 +19,22 @@
 ## Command 
 Интерфейс, от которого будут наследоваться другие команды 
 ```kotlin    
-enum ReturnCode {
+enum StatusCode {
     EXIT,
     ERROR,
     SUCCESS
 }
 
+data class ReturnCode(val status: StatusCode, val code: Int)
+
 interface Command(private args: List<Token>) {
-    execute(in: Stream, out: Stream, error: Stream): ReturnCode
+    execute(in: Stream, out: Stream, error: Stream, environment: Environment): ReturnCode
 };
 ```
 
 ## CommandFactory 
 ```kotlin
-object CommandFactory {
+class CommandFactory {
     Map<String, (List<Token>) -> Command> supportedCommands;
     getCommand(args: List<Token>): Command {...}
 }
@@ -46,7 +48,7 @@ object CommandFactory {
 Хранит состояние системы, реализовано через глобальный Singleton.
 
 ```kotlin
-object State {
+class Environment {
     Map<String, String> enviromentVariables
 }
 ```
@@ -111,5 +113,5 @@ object Substitutor {
 
 ### ExternalCommand
 * Используем ProcessBuilder.
-* Выставляем процессу окружение, совпадающее с нашим State.
+* Выставляем процессу окружение, совпадающее с нашим environment.
 * Если внешняя команда вернула ненулевой код возврата, то возвращаем `ReturnCode::ERROR`.
