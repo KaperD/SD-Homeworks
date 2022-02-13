@@ -1,5 +1,6 @@
 package ru.cli.commands
 
+import ru.cli.Environment
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -28,12 +29,14 @@ interface Command {
      * @param input the input stream
      * @param out the output stream
      * @param error the error stream
+     * @param environment the environment of process
      *
      * @return the execution code
      */
     fun execute(
         input: InputStream = System.`in`,
         out: OutputStream = System.out,
-        error: OutputStream = System.err
+        error: OutputStream = System.err,
+        environment: Environment = Environment()
     ): ReturnCode
 }

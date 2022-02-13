@@ -16,7 +16,7 @@ class EchoCommandTest {
         val out = PipedOutputStream(commandOutput)
         val error = PipedOutputStream(commandError)
 
-        command.execute(input, out, error)
+        command.execute(input, out, error,)
         input.close()
         out.close()
         error.close()

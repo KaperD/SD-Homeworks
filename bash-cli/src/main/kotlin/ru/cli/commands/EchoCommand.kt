@@ -1,5 +1,6 @@
 package ru.cli.commands
 
+import ru.cli.Environment
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -14,10 +15,11 @@ class EchoCommand(override val args: List<String>) : Command {
      * @param input the input stream
      * @param out the output stream
      * @param error the error stream
+     * @param environment the environment of process
      *
      * @return the execution code
      */
-    override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
+    override fun execute(input: InputStream, out: OutputStream, error: OutputStream, environment: Environment): ReturnCode {
         out.write((args.joinToString(" ") + System.lineSeparator()).toByteArray())
         return ReturnCode(StatusCode.SUCCESS, 0)
     }

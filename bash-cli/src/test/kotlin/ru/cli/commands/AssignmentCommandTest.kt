@@ -3,11 +3,13 @@ package ru.cli.commands
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import ru.cli.Environment.vars
+import ru.cli.Environment
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
 
 class AssignmentCommandTest {
+    private val environment = Environment()
+
     private fun calculate(args: List<String>): List<String> {
         val command = AssignmentCommand(args)
         val commandInput = PipedOutputStream()
@@ -18,7 +20,7 @@ class AssignmentCommandTest {
         val out = PipedOutputStream(commandOutput)
         val error = PipedOutputStream(commandError)
 
-        command.execute(input, out, error)
+        command.execute(input, out, error, environment)
         input.close()
         out.close()
         error.close()
@@ -28,7 +30,7 @@ class AssignmentCommandTest {
 
     @BeforeEach
     fun clearEnvironment() {
-        vars.clear()
+        environment.vars.clear()
     }
 
     @Test
@@ -36,7 +38,7 @@ class AssignmentCommandTest {
         val expected = listOf("", "")
         val tested = calculate(listOf("a", "2"))
 
-        Assertions.assertEquals(vars, mapOf(Pair("a", "2")))
+        Assertions.assertEquals(environment.vars, mapOf(Pair("a", "2")))
         Assertions.assertEquals(expected, tested)
     }
 
@@ -48,7 +50,7 @@ class AssignmentCommandTest {
         val expected = listOf("", "")
         val tested = calculate(listOf("b", "4"))
 
-        Assertions.assertEquals(vars, mapOf(Pair("a", "3"), Pair("b", "4")))
+        Assertions.assertEquals(environment.vars, mapOf(Pair("a", "3"), Pair("b", "4")))
         Assertions.assertEquals(expected, tested)
     }
 
