@@ -13,6 +13,7 @@ fun main() {
         val commandFactory = CommandFactory()
 
         val tokens = Parser.splitIntoTokens(line)
+
         val command = commandFactory.getCommand(tokens)
 
         try {
