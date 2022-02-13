@@ -132,4 +132,38 @@ class ParserTest {
             IllegalArgumentException::class.java
         ) { Parser.parseAssignmentCommand("a=\"b\" b\"") }
     }
+
+    @Test
+    fun splitIntoCommandsTest() {
+        Assertions.assertEquals(
+            listOf(
+                listOf(
+                    Token("a", QuottingType.WITHOUT_QUOTE),
+                    Token("b", QuottingType.WITHOUT_QUOTE)
+                ),
+                listOf(
+                    Token("c", QuottingType.WITHOUT_QUOTE)
+                ),
+//                listOf(
+//                    Token("a", QuottingType.WITHOUT_QUOTE),
+//                    Token("b", QuottingType.WITHOUT_QUOTE),
+//                    Token("c", QuottingType.WITHOUT_QUOTE),
+//                    Token("d", QuottingType.WITHOUT_QUOTE)
+//                )
+            ),
+            Parser.splitIntoCommands(
+                listOf(
+                    Token("a", QuottingType.WITHOUT_QUOTE),
+                    Token("b", QuottingType.WITHOUT_QUOTE),
+                    Token("|", QuottingType.WITHOUT_QUOTE),
+                    Token("c", QuottingType.WITHOUT_QUOTE),
+//                    Token("|", QuottingType.WITHOUT_QUOTE),
+//                    Token("a", QuottingType.WITHOUT_QUOTE),
+//                    Token("b", QuottingType.WITHOUT_QUOTE),
+//                    Token("c", QuottingType.WITHOUT_QUOTE),
+//                    Token("d", QuottingType.WITHOUT_QUOTE)
+                )
+            )
+        )
+    }
 }

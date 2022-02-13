@@ -67,11 +67,16 @@ object Parser {
         val tmpCommand = mutableListOf<Token>()
         for (token in tokens) {
             if (token.value == "|") {
-                result.add(tmpCommand)
+                val tmp = mutableListOf<Token>()
+                tmp.addAll(tmpCommand)
+                result.add(tmp)
                 tmpCommand.clear()
             } else {
                 tmpCommand.add(token)
             }
+        }
+        if (tmpCommand.size > 0) {
+            result.add(tmpCommand)
         }
         return result
     }
