@@ -2,6 +2,7 @@ package ru.cli.commands
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import ru.cli.Environment
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
 import kotlin.io.path.Path
@@ -19,7 +20,7 @@ class WcCommandTest {
         val out = PipedOutputStream(commandOutput)
         val error = PipedOutputStream(commandError)
 
-        command.execute(input, out, error,)
+        command.execute(input, out, error, Environment())
         out.close()
 
         return String(commandOutput.readAllBytes())

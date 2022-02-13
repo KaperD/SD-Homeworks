@@ -11,13 +11,22 @@ fun main() {
         }
 
         val commandFactory = CommandFactory()
+        val environment = Environment()
 
-        val tokens = Parser.splitIntoTokens(line)
+        val tokens = Parser.splitIntoTokens(line).flatMap { token ->
+            Substitutor.substitute(token, environment).let { substitutedToken ->
+                when (substitutedToken.quottingType) {
+                    QuottingType.WITHOUT_QUOTE -> Parser.splitIntoTokens(substitutedToken.value)
+                    else -> listOf(substitutedToken)
+                }
+            }
+        }
 
-        val command = commandFactory.getCommand(tokens)
+        val commands = Parser.splitIntoCommands(tokens).map { commandFactory.getCommand(it) }
+        val pipe = Pipe(commands)
 
         try {
-            when (command.execute().status) {
+            when (pipe.execute(environment = environment).status) {
                 StatusCode.EXIT -> return
                 else -> Unit
             }
