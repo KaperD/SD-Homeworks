@@ -21,7 +21,7 @@ class CatCommand(override val args: List<String>) : Command {
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         if (args.isEmpty()) {
             out.write(input.readAllBytes())
-            return ReturnCode.SUCCESS
+            return ReturnCode(StatusCode.SUCCESS, 0)
         }
 
         for (filename in args) {
@@ -30,9 +30,9 @@ class CatCommand(override val args: List<String>) : Command {
                 out.write(file.readBytes())
             } else {
                 error.write(("$filename: No such file or directory").toByteArray())
-                return ReturnCode.ERROR
+                return ReturnCode(StatusCode.ERROR, 1)
             }
         }
-        return ReturnCode.SUCCESS
+        return ReturnCode(StatusCode.SUCCESS, 0)
     }
 }

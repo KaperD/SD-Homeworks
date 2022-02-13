@@ -40,9 +40,9 @@ class ExternalCommand(override val args: List<String>) : Command {
 
         val result = process.waitFor()
         if (result == 0) {
-            return ReturnCode.SUCCESS
+            return ReturnCode(StatusCode.SUCCESS, result)
         }
 
-        return ReturnCode.ERROR
+        return ReturnCode(StatusCode.ERROR, result)
     }
 }

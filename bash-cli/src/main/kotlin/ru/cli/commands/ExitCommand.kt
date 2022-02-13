@@ -17,6 +17,6 @@ class ExitCommand(override val args: List<String>) : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
-        return ReturnCode.EXIT
+        return ReturnCode(StatusCode.EXIT, 0)
     }
 }

@@ -6,11 +6,13 @@ import java.io.OutputStream
 /**
  * Define result of command execution
  */
-enum class ReturnCode {
+enum class StatusCode {
     SUCCESS,
     ERROR,
     EXIT
 }
+
+data class ReturnCode(val status: StatusCode, val code: Int)
 
 /**
  * Provides interface for all supported commands

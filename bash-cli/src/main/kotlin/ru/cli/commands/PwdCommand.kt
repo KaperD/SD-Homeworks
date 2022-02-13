@@ -19,7 +19,7 @@ class PwdCommand(override val args: List<String>) : Command {
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream): ReturnCode {
         out.write(getCurrentDirectory().toByteArray())
-        return ReturnCode.SUCCESS
+        return ReturnCode(StatusCode.SUCCESS, 0)
     }
 
     private fun getCurrentDirectory(): String {

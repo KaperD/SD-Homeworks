@@ -23,7 +23,7 @@ class WcCommand(override val args: List<String>) : Command {
             val text = String(input.readAllBytes())
             val statistics = getStatistics(text)
             writeStatistics(out, statistics)
-            return ReturnCode.SUCCESS
+            return ReturnCode(StatusCode.SUCCESS, 0)
         }
 
         val totalStatistics = Statistics()
@@ -35,11 +35,11 @@ class WcCommand(override val args: List<String>) : Command {
         }
 
         if (args.size == 1) {
-            return ReturnCode.SUCCESS
+            return ReturnCode(StatusCode.SUCCESS, 0)
         }
 
         writeStatistics(out, totalStatistics, "total")
-        return ReturnCode.SUCCESS
+        return ReturnCode(StatusCode.SUCCESS, 0)
     }
 
     private data class Statistics(
@@ -55,11 +55,8 @@ class WcCommand(override val args: List<String>) : Command {
     }
 
     private fun toBrilliantString(integer: Int): String {
-        var string = integer.toString()
-        while (string.length < 8) {
-            string = " $string"
-        }
-        return string
+        val string = integer.toString()
+        return " ".repeat(8 - string.length) + string
     }
 
     private fun writeStatistics(output: OutputStream, statistics: Statistics, label: String? = null) {
