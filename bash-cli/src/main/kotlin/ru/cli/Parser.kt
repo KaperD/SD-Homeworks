@@ -61,4 +61,8 @@ object Parser {
 
         return strList
     }
+
+    fun splitIntoCommands(tokens: List<Token>): List<List<Token>> {
+        TODO()
+    }
 }
