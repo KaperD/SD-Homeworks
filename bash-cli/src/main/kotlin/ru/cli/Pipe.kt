@@ -24,14 +24,16 @@ class Pipe(val commands: List<Command>) {
         val tmpOutput = ByteArrayOutputStream()
 
         commands.forEach { command ->
-            val returnCode = command.execute(tmpInput, tmpOutput, error, environment)
-            tmpInput = ByteArrayInputStream(tmpOutput.toByteArray())
             tmpOutput.reset()
+
+            val returnCode = command.execute(tmpInput, tmpOutput, error, environment)
 
             when (returnCode.status) {
                 StatusCode.SUCCESS -> Unit
                 else -> return returnCode
             }
+
+            tmpInput = ByteArrayInputStream(tmpOutput.toByteArray())
         }
 
         out.write(tmpOutput.toByteArray())

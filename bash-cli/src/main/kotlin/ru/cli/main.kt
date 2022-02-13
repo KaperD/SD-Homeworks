@@ -5,13 +5,13 @@ import ru.cli.commands.StatusCode
 import java.lang.Exception
 
 fun main() {
+    val commandFactory = CommandFactory()
+    val environment = Environment()
+
     generateSequence(::readLine).forEach { line ->
         if (line.isEmpty()) {
             return@forEach
         }
-
-        val commandFactory = CommandFactory()
-        val environment = Environment()
 
         val tokens = Parser.splitIntoTokens(line).flatMap { token ->
             Substitutor.substitute(token, environment).let { substitutedToken ->
