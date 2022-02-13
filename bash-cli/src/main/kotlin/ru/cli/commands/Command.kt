@@ -37,6 +37,6 @@ interface Command {
         input: InputStream = System.`in`,
         out: OutputStream = System.out,
         error: OutputStream = System.err,
-        environment: Environment = Environment()
+        environment: Environment
     ): ReturnCode
 }
