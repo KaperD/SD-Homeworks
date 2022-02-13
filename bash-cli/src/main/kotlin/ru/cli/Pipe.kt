@@ -8,7 +8,20 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 
+/**
+ * This class provides methods for piping list of commands
+ */
 class Pipe(val commands: List<Command>) {
+    /**
+     * Execute list of commands, so that output of previous command is input for next command
+     *
+     * @param input the input stream
+     * @param out the output stream
+     * @param error the error stream
+     * @param environment the environment of process
+     *
+     * @return the execution code
+     */
     fun execute(
         input: InputStream = System.`in`,
         out: OutputStream = System.out,
