@@ -7,7 +7,7 @@ import ru.cli.Token
 /**
  * This class provides methods for creating a command from list of tokens
  */
-object CommandFactory {
+class CommandFactory {
     private val supportedCommands: Map<String, (List<String>) -> Command> = mapOf(
         "pwd" to ::PwdCommand,
         "wc" to ::WcCommand,

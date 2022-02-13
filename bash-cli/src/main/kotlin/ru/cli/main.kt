@@ -10,8 +10,10 @@ fun main() {
             return@forEach
         }
 
+        val commandFactory = CommandFactory()
+
         val tokens = Parser.splitIntoTokens(line)
-        val command = CommandFactory.getCommand(tokens)
+        val command = commandFactory.getCommand(tokens)
 
         try {
             when (command.execute().status) {

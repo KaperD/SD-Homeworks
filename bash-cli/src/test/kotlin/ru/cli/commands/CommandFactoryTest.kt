@@ -12,8 +12,10 @@ class CommandFactoryTest {
     fun supportedCommandTest() {
         val supportedCommands = listOf("pwd", "wc", "cat", "echo", "exit")
 
+        val commandFactory = CommandFactory()
+
         supportedCommands.forEach {
-            val command = CommandFactory.getCommand(listOf(Token(it, QuottingType.WITHOUT_QUOTE)))
+            val command = commandFactory.getCommand(listOf(Token(it, QuottingType.WITHOUT_QUOTE)))
             assertTrue(command.args.isEmpty())
             assertEquals(
                 when (it) {
@@ -31,20 +33,23 @@ class CommandFactoryTest {
 
     @Test
     fun externalCommandTest() {
-        val command = CommandFactory.getCommand(listOf(Token("python", QuottingType.WITHOUT_QUOTE)))
+        val commandFactory = CommandFactory()
+        val command = commandFactory.getCommand(listOf(Token("python", QuottingType.WITHOUT_QUOTE)))
         assertEquals(listOf("python"), command.args)
         assertEquals(ExternalCommand::class, command::class)
     }
 
     @Test
     fun incorrectAssignmentCommandTest() {
-        val command = CommandFactory.getCommand(listOf(Token("x=1", QuottingType.SINGLE_QUOTE)))
+        val commandFactory = CommandFactory()
+        val command = commandFactory.getCommand(listOf(Token("x=1", QuottingType.SINGLE_QUOTE)))
         assertEquals(ExternalCommand::class, command::class)
     }
 
     @Test
     fun correctAssignmentCommand() {
-        val command = CommandFactory.getCommand(listOf(Token("x=1", QuottingType.WITHOUT_QUOTE)))
+        val commandFactory = CommandFactory()
+        val command = commandFactory.getCommand(listOf(Token("x=1", QuottingType.WITHOUT_QUOTE)))
         assertEquals(AssignmentCommand::class, command::class)
         assertEquals(listOf("x", "1"), command.args)
     }
