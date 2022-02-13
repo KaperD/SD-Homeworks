@@ -63,6 +63,16 @@ object Parser {
     }
 
     fun splitIntoCommands(tokens: List<Token>): List<List<Token>> {
-        TODO()
+        val result = mutableListOf<List<Token>>()
+        val tmpCommand = mutableListOf<Token>()
+        for (token in tokens) {
+            if (token.value == "|") {
+                result.add(tmpCommand)
+                tmpCommand.clear()
+            } else {
+                tmpCommand.add(token)
+            }
+        }
+        return result
     }
 }
