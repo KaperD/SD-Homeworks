@@ -8,37 +8,37 @@ class ParserTest {
     fun splitIntoTokensTestNoQuote() {
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE)
             ),
             Parser.splitIntoTokens("a")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE)
             ),
             Parser.splitIntoTokens("   a ")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("b", QuottingType.WITHOUT_QUOTE),
-                Token("c", QuottingType.WITHOUT_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("b", QuotingType.WITHOUT_QUOTE),
+                Token("c", QuotingType.WITHOUT_QUOTE)
             ),
             Parser.splitIntoTokens("a b c")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("bbda", QuottingType.WITHOUT_QUOTE),
-                Token("c", QuottingType.WITHOUT_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("bbda", QuotingType.WITHOUT_QUOTE),
+                Token("c", QuotingType.WITHOUT_QUOTE)
             ),
             Parser.splitIntoTokens("a bbda c")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("bc-0_!2", QuottingType.WITHOUT_QUOTE),
-                Token("c", QuottingType.WITHOUT_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("bc-0_!2", QuotingType.WITHOUT_QUOTE),
+                Token("c", QuotingType.WITHOUT_QUOTE)
             ),
             Parser.splitIntoTokens("a bc-0_!2 c")
         )
@@ -48,43 +48,43 @@ class ParserTest {
     fun splitIntoTokensTestWithQuotes() {
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("b b", QuottingType.SINGLE_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("b b", QuotingType.SINGLE_QUOTE)
             ),
             Parser.splitIntoTokens("a \'b b\'")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("b b", QuottingType.DOUBLE_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("b b", QuotingType.DOUBLE_QUOTE)
             ),
             Parser.splitIntoTokens("a \"b b\"")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("b b", QuottingType.SINGLE_QUOTE),
-                Token("c c", QuottingType.DOUBLE_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("b b", QuotingType.SINGLE_QUOTE),
+                Token("c c", QuotingType.DOUBLE_QUOTE)
             ),
             Parser.splitIntoTokens("a \'b b\' \"c c\"")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("b \"kek\" b", QuottingType.SINGLE_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("b \"kek\" b", QuotingType.SINGLE_QUOTE)
             ),
             Parser.splitIntoTokens("a \'b \"kek\" b\'")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a", QuottingType.WITHOUT_QUOTE),
-                Token("b \'kek\' b", QuottingType.DOUBLE_QUOTE)
+                Token("a", QuotingType.WITHOUT_QUOTE),
+                Token("b \'kek\' b", QuotingType.DOUBLE_QUOTE)
             ),
             Parser.splitIntoTokens("a \"b \'kek\' b\"")
         )
         Assertions.assertEquals(
             listOf(
-                Token("a=\"b  c\"", QuottingType.WITHOUT_QUOTE)
+                Token("a=\"b  c\"", QuotingType.WITHOUT_QUOTE)
             ),
             Parser.splitIntoTokens("a=\"b  c\"")
         )
@@ -138,30 +138,62 @@ class ParserTest {
         Assertions.assertEquals(
             listOf(
                 listOf(
-                    Token("a", QuottingType.WITHOUT_QUOTE),
-                    Token("b", QuottingType.WITHOUT_QUOTE)
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE)
                 ),
                 listOf(
-                    Token("c", QuottingType.WITHOUT_QUOTE)
+                    Token("c", QuotingType.WITHOUT_QUOTE)
                 ),
-//                listOf(
-//                    Token("a", QuottingType.WITHOUT_QUOTE),
-//                    Token("b", QuottingType.WITHOUT_QUOTE),
-//                    Token("c", QuottingType.WITHOUT_QUOTE),
-//                    Token("d", QuottingType.WITHOUT_QUOTE)
-//                )
+                listOf(
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE),
+                    Token("c", QuotingType.WITHOUT_QUOTE),
+                    Token("d", QuotingType.WITHOUT_QUOTE)
+                )
             ),
             Parser.splitIntoCommands(
                 listOf(
-                    Token("a", QuottingType.WITHOUT_QUOTE),
-                    Token("b", QuottingType.WITHOUT_QUOTE),
-                    Token("|", QuottingType.WITHOUT_QUOTE),
-                    Token("c", QuottingType.WITHOUT_QUOTE),
-//                    Token("|", QuottingType.WITHOUT_QUOTE),
-//                    Token("a", QuottingType.WITHOUT_QUOTE),
-//                    Token("b", QuottingType.WITHOUT_QUOTE),
-//                    Token("c", QuottingType.WITHOUT_QUOTE),
-//                    Token("d", QuottingType.WITHOUT_QUOTE)
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE),
+                    Token("|", QuotingType.WITHOUT_QUOTE),
+                    Token("c", QuotingType.WITHOUT_QUOTE),
+                    Token("|", QuotingType.WITHOUT_QUOTE),
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE),
+                    Token("c", QuotingType.WITHOUT_QUOTE),
+                    Token("d", QuotingType.WITHOUT_QUOTE)
+                )
+            )
+        )
+    }
+
+    @Test
+    fun splitIntoCommandsQuotingTest() {
+        Assertions.assertEquals(
+            listOf(
+                listOf(
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE),
+                    Token("|", QuotingType.SINGLE_QUOTE),
+                    Token("c", QuotingType.WITHOUT_QUOTE),
+                    Token("|", QuotingType.DOUBLE_QUOTE),
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE),
+                    Token("c", QuotingType.WITHOUT_QUOTE),
+                    Token("d", QuotingType.WITHOUT_QUOTE)
+                )
+            ),
+            Parser.splitIntoCommands(
+                listOf(
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE),
+                    Token("|", QuotingType.SINGLE_QUOTE),
+                    Token("c", QuotingType.WITHOUT_QUOTE),
+                    Token("|", QuotingType.DOUBLE_QUOTE),
+                    Token("a", QuotingType.WITHOUT_QUOTE),
+                    Token("b", QuotingType.WITHOUT_QUOTE),
+                    Token("c", QuotingType.WITHOUT_QUOTE),
+                    Token("d", QuotingType.WITHOUT_QUOTE)
                 )
             )
         )

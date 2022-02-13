@@ -13,7 +13,7 @@ object Substitutor {
      * @return token with substituted values of vars
      */
     fun substitute(input: Token, environment: Environment): Token {
-        if (input.quottingType == QuottingType.SINGLE_QUOTE) {
+        if (input.quotingType == QuotingType.SINGLE_QUOTE) {
             return input
         }
         var result = ""
@@ -33,6 +33,6 @@ object Substitutor {
                 i++
             }
         }
-        return Token(result, input.quottingType)
+        return Token(result, input.quotingType)
     }
 }

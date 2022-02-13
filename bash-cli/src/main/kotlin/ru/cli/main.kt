@@ -15,8 +15,8 @@ fun main() {
 
         val tokens = Parser.splitIntoTokens(line).flatMap { token ->
             Substitutor.substitute(token, environment).let { substitutedToken ->
-                when (substitutedToken.quottingType) {
-                    QuottingType.WITHOUT_QUOTE -> Parser.splitIntoTokens(substitutedToken.value)
+                when (substitutedToken.quotingType) {
+                    QuotingType.WITHOUT_QUOTE -> Parser.splitIntoTokens(substitutedToken.value)
                     else -> listOf(substitutedToken)
                 }
             }

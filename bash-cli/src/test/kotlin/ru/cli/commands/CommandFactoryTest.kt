@@ -2,7 +2,7 @@ package ru.cli.commands
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import ru.cli.QuottingType
+import ru.cli.QuotingType
 import ru.cli.Token
 import java.lang.RuntimeException
 import kotlin.test.assertEquals
@@ -15,7 +15,7 @@ class CommandFactoryTest {
         val commandFactory = CommandFactory()
 
         supportedCommands.forEach {
-            val command = commandFactory.getCommand(listOf(Token(it, QuottingType.WITHOUT_QUOTE)))
+            val command = commandFactory.getCommand(listOf(Token(it, QuotingType.WITHOUT_QUOTE)))
             assertTrue(command.args.isEmpty())
             assertEquals(
                 when (it) {
@@ -34,7 +34,7 @@ class CommandFactoryTest {
     @Test
     fun externalCommandTest() {
         val commandFactory = CommandFactory()
-        val command = commandFactory.getCommand(listOf(Token("python", QuottingType.WITHOUT_QUOTE)))
+        val command = commandFactory.getCommand(listOf(Token("python", QuotingType.WITHOUT_QUOTE)))
         assertEquals(listOf("python"), command.args)
         assertEquals(ExternalCommand::class, command::class)
     }
@@ -42,14 +42,14 @@ class CommandFactoryTest {
     @Test
     fun incorrectAssignmentCommandTest() {
         val commandFactory = CommandFactory()
-        val command = commandFactory.getCommand(listOf(Token("x=1", QuottingType.SINGLE_QUOTE)))
+        val command = commandFactory.getCommand(listOf(Token("x=1", QuotingType.SINGLE_QUOTE)))
         assertEquals(ExternalCommand::class, command::class)
     }
 
     @Test
     fun correctAssignmentCommand() {
         val commandFactory = CommandFactory()
-        val command = commandFactory.getCommand(listOf(Token("x=1", QuottingType.WITHOUT_QUOTE)))
+        val command = commandFactory.getCommand(listOf(Token("x=1", QuotingType.WITHOUT_QUOTE)))
         assertEquals(AssignmentCommand::class, command::class)
         assertEquals(listOf("x", "1"), command.args)
     }

@@ -7,7 +7,7 @@ import java.util.regex.Pattern
  * This class provides methods for tokenization and parsing assignment
  */
 object Parser {
-    private val assignmentRegex = "^([a-zA-Z_]+)=(([^\\s\'\"]+)|\'([^\']*)\'|\"([^\"]*)\")$" // (1)=(2 (3) | ('4') | ("5"))
+    private const val assignmentRegex = "^([a-zA-Z_]+)=(([^\\s\'\"]+)|\'([^\']*)\'|\"([^\"]*)\")$" // (1)=(2 (3) | ('4') | ("5"))
 
     /**
      * Returns list of tokens
@@ -22,7 +22,7 @@ object Parser {
         val regex = "\'([^\']*)\'|" + // '(1)'
             "\"([^\"]*)\"|" + // "(2)"
             "(($assignmentRegex)|[^\\s\'\"]+)" // (3)
-        val quottingTypes = listOf(QuottingType.SINGLE_QUOTE, QuottingType.DOUBLE_QUOTE, QuottingType.WITHOUT_QUOTE)
+        val quotingTypes = listOf(QuotingType.SINGLE_QUOTE, QuotingType.DOUBLE_QUOTE, QuotingType.WITHOUT_QUOTE)
         val m: Matcher = Pattern.compile(regex).matcher(line)
 
         while (m.find()) {
@@ -30,7 +30,7 @@ object Parser {
                 .filter { m.group(it) != null }
                 .forEach {
                     tokenList.add(
-                        Token(m.group(it).toString(), quottingTypes[it - 1])
+                        Token(m.group(it).toString(), quotingTypes[it - 1])
                     )
                 }
         }
@@ -66,7 +66,7 @@ object Parser {
         val result = mutableListOf<List<Token>>()
         val tmpCommand = mutableListOf<Token>()
         for (token in tokens) {
-            if (token.value == "|") {
+            if (token == Token("|", QuotingType.WITHOUT_QUOTE)) {
                 val tmp = mutableListOf<Token>()
                 tmp.addAll(tmpCommand)
                 result.add(tmp)

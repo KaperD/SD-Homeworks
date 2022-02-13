@@ -1,7 +1,7 @@
 package ru.cli.commands
 
 import ru.cli.Parser
-import ru.cli.QuottingType
+import ru.cli.QuotingType
 import ru.cli.Token
 
 /**
@@ -24,7 +24,7 @@ class CommandFactory {
      */
     fun getCommand(args: List<Token>): Command {
         val commandName = args[0].value
-        if ('=' in commandName && args[0].quottingType == QuottingType.WITHOUT_QUOTE) {
+        if ('=' in commandName && args[0].quotingType == QuotingType.WITHOUT_QUOTE) {
             return AssignmentCommand(Parser.parseAssignmentCommand(args[0].value))
         }
 
