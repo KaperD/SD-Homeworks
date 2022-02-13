@@ -1,7 +1,6 @@
 package ru.cli
 
 import ru.cli.commands.CommandFactory
-import ru.cli.commands.ReturnCode
 import ru.cli.commands.StatusCode
 import java.lang.Exception
 

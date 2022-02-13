@@ -4,7 +4,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 /**
- * Define result of command execution
+ * Status of command execution
  */
 enum class StatusCode {
     SUCCESS,
@@ -12,6 +12,9 @@ enum class StatusCode {
     EXIT
 }
 
+/**
+ * Define result of command execution
+ */
 data class ReturnCode(val status: StatusCode, val code: Int)
 
 /**
