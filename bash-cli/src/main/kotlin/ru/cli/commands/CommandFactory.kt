@@ -13,7 +13,8 @@ class CommandFactory {
         "wc" to ::WcCommand,
         "cat" to ::CatCommand,
         "echo" to ::EchoCommand,
-        "exit" to ::ExitCommand
+        "exit" to ::ExitCommand,
+        "grep" to ::GrepCommand
     )
 
     /**

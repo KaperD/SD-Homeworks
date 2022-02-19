@@ -23,6 +23,7 @@ tasks.named<JavaExec>("run") {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+    implementation("com.github.ajalt.clikt:clikt:3.4.0")
 }
 
 tasks.test {
