@@ -48,4 +48,20 @@ class GrepCommandTest {
         val actualOutputString = calculate(listOf("lol|aboba"), ByteArrayInputStream(inputString.toByteArray()))
         Assertions.assertEquals(expectedOutputString, actualOutputString)
     }
+
+    @Test
+    fun simpleStreamTestI() {
+        val inputString = Path("src", "test", "resources", "grep-test-01.out").readText()
+        val expectedOutputString = Path("src", "test", "resources", "grep-test-01.out").readText()
+        val actualOutputString = calculate(listOf("loL|aboba", "-i"), ByteArrayInputStream(inputString.toByteArray()))
+        Assertions.assertEquals(expectedOutputString, actualOutputString)
+    }
+
+    @Test
+    fun simpleStreamTestW() {
+        val inputString = Path("src", "test", "resources", "grep-test-01.out").readText()
+        val expectedOutputString = "lol\n"
+        val actualOutputString = calculate(listOf("lol|ab", "-w"), ByteArrayInputStream(inputString.toByteArray()))
+        Assertions.assertEquals(expectedOutputString, actualOutputString)
+    }
 }
