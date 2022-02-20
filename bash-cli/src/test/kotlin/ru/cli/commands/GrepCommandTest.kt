@@ -59,7 +59,7 @@ class GrepCommandTest {
 
     @Test
     fun simpleStreamTestW() {
-        val inputString = Path("src", "test", "resources", "grep-test-01.in").readText()
+        val inputString = Path("src", "test", "resources", "grep-test-01.out").readText()
         val expectedOutputString = "lol\n"
         val actualOutputString = calculate(listOf("lol|ab", "-w"), ByteArrayInputStream(inputString.toByteArray()))
         Assertions.assertEquals(expectedOutputString, actualOutputString)
