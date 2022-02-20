@@ -45,7 +45,6 @@ class GrepCommand(override val args: List<String>) : Command {
                 findLines(input, out, regexStr.toRegex(), A)
                 returnCode = ReturnCode(StatusCode.SUCCESS, 0)
             }
-
         }.main(args)
 
         return returnCode
