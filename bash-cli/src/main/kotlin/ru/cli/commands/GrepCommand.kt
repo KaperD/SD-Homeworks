@@ -2,7 +2,7 @@ package ru.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
-import com.github.ajalt.clikt.parameters.arguments.multiple
+import com.github.ajalt.clikt.parameters.arguments.optional
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
@@ -39,10 +39,14 @@ class GrepCommand(override val args: List<String>) : Command {
             val isFullMatch by option("-w").flag()
             val A: Int by option().int().default(0)
             val regexStr by argument()
-            val sources by argument().file().multiple()
+            val source by argument().file(mustExist = true, canBeDir = false).optional()
 
             override fun run() {
-                findLines(input, out, regexStr.toRegex(), A)
+                var inp = input
+                if (source != null) {
+                    inp = source!!.inputStream()
+                }
+                findLines(inp, out, regexStr.toRegex(), A)
                 returnCode = ReturnCode(StatusCode.SUCCESS, 0)
             }
         }.main(args)
