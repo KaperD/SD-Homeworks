@@ -1,9 +1,12 @@
 package ru.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.parameters.arguments.argument
+import com.github.ajalt.clikt.parameters.arguments.multiple
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.types.file
 import com.github.ajalt.clikt.parameters.types.int
 import ru.cli.Environment
 import java.io.InputStream
@@ -45,6 +48,8 @@ class GrepCommand(override val args: List<String>) : Command {
         val isInsetiveCase by option("-i").flag()
         val isFullMatch by option("-w").flag()
         val A: Int by option().int().default(0)
+        val regex by argument()
+        val sources by argument().file().multiple()
 
         lateinit var returnCode: ReturnCode
 
