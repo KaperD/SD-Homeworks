@@ -33,28 +33,39 @@ class GrepCommand(override val args: List<String>) : Command {
         error: OutputStream,
         environment: Environment
     ): ReturnCode {
-        return GrepCommandImpl(input, out, error, environment).let {
-            it.main(args)
-            it.returnCode
-        }
+        lateinit var returnCode: ReturnCode
+        object : CliktCommand() {
+            val isInsetiveCase by option("-i").flag()
+            val isFullMatch by option("-w").flag()
+            val A: Int by option().int().default(0)
+            val regexStr by argument()
+            val sources by argument().file().multiple()
+
+            override fun run() {
+                findLines(input, out, regexStr.toRegex(), A)
+                returnCode = ReturnCode(StatusCode.SUCCESS, 0)
+            }
+
+        }.main(args)
+
+        return returnCode
     }
 
-    private class GrepCommandImpl(
-        input: InputStream,
-        out: OutputStream,
-        error: OutputStream,
-        environment: Environment
-    ) : CliktCommand() {
-        val isInsetiveCase by option("-i").flag()
-        val isFullMatch by option("-w").flag()
-        val A: Int by option().int().default(0)
-        val regex by argument()
-        val sources by argument().file().multiple()
-
-        lateinit var returnCode: ReturnCode
-
-        override fun run() {
-            TODO("Not yet implemented")
+    fun findLines(input: InputStream, output: OutputStream, regex: Regex, contextSize: Int) {
+        input.bufferedReader().useLines { lines ->
+            output.bufferedWriter().use { out ->
+                var curUnprintedContextSize = 0
+                for (line in lines) {
+                    if (regex.containsMatchIn(line)) {
+                        curUnprintedContextSize = contextSize + 1
+                    }
+                    if (curUnprintedContextSize > 0) {
+                        out.write(line)
+                        out.newLine()
+                        curUnprintedContextSize--
+                    }
+                }
+            }
         }
     }
 }
