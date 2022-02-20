@@ -68,7 +68,17 @@ class GrepCommand(override val args: List<String>) : Command {
         return returnCode
     }
 
-    fun findLines(input: InputStream, output: OutputStream, regex: Regex, contextSize: Int) {
+    /**
+     * finds lines which match regex and write them to output stream with context
+     *
+     * @param input the input stream
+     * @param output the output stream
+     * @param regex the regex
+     * @param contextSize number of lines to be written after match
+     *
+     * @return none
+     */
+    private fun findLines(input: InputStream, output: OutputStream, regex: Regex, contextSize: Int) {
         input.bufferedReader().useLines { lines ->
             output.bufferedWriter().use { out ->
                 var curUnprintedContextSize = 0
