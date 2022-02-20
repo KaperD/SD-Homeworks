@@ -46,7 +46,21 @@ class GrepCommand(override val args: List<String>) : Command {
                 if (source != null) {
                     inp = source!!.inputStream()
                 }
-                findLines(inp, out, regexStr.toRegex(), A)
+                val regex =
+                    if (isInsetiveCase) {
+                        var tmp = regexStr
+                        if (isFullMatch) {
+                            tmp = "(?<!\\p{L})$regexStr(?!\\p{L})"
+                        }
+                        tmp.toRegex(RegexOption.IGNORE_CASE)
+                    } else {
+                        var tmp = regexStr
+                        if (isFullMatch) {
+                            tmp = "(?<!\\p{L})$regexStr(?!\\p{L})"
+                        }
+                        tmp.toRegex()
+                    }
+                findLines(inp, out, regex, A)
                 returnCode = ReturnCode(StatusCode.SUCCESS, 0)
             }
         }.main(args)
