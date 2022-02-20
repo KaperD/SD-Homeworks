@@ -50,7 +50,7 @@ class GrepCommand(override val args: List<String>) : Command {
                     if (isInsetiveCase) {
                         var tmp = regexStr
                         if (isFullMatch) {
-                            tmp = "(?<!\\p{L})$regexStr(?!\\p{L})"
+                            tmp = "/\\b($regexStr)\\b/i"
                         }
                         tmp.toRegex(RegexOption.IGNORE_CASE)
                     } else {
