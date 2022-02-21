@@ -37,7 +37,7 @@ class GrepCommand(override val args: List<String>) : Command {
         object : CliktCommand() {
             val isInsetiveCase by option("-i").flag()
             val isFullMatch by option("-w").flag()
-            val A: Int by option().int().default(0)
+            val A: Int by option("-A").int().default(0)
             val regexStr by argument()
             val source by argument().file(mustExist = true, canBeDir = false).optional()
 

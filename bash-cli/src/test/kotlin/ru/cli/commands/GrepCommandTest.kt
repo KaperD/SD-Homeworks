@@ -64,4 +64,12 @@ class GrepCommandTest {
         val actualOutputString = calculate(listOf("lol|ab", "-w"), ByteArrayInputStream(inputString.toByteArray()))
         Assertions.assertEquals(expectedOutputString, actualOutputString)
     }
+
+    @Test
+    fun flagAWithIntersection() {
+        val input = Path("src", "test", "resources", "grep-test-flag-a.in").readText()
+        val expected = Path("src", "test", "resources", "grep-test-flag-a.out").readText()
+        val tested = calculate(listOf("lol", "-A", "1"), ByteArrayInputStream(input.toByteArray()))
+        Assertions.assertEquals(expected, tested)
+    }
 }
