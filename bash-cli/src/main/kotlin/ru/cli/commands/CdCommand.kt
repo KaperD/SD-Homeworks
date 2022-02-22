@@ -6,9 +6,23 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.lang.System.lineSeparator
 
+/**
+ * This class provides `cd` bash command functionality.
+ * `cd` is a command that changes shell working directory
+ */
 class CdCommand(override val args: List<String>) : Command {
     private val homeDir = File(System.getProperty("user.home")).also { assert(it.isDirectory) }
 
+    /**
+     * Executes `cd` command
+     *
+     * @param input the input stream
+     * @param out the output stream
+     * @param error the error stream
+     * @param environment the environment of process
+     *
+     * @return the execution code
+     */
     override fun execute(
         input: InputStream,
         out: OutputStream,

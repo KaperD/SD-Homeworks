@@ -6,7 +6,21 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.lang.System.lineSeparator
 
+/**
+ * This class provides `ls` bash command functionality.
+ * `ls` is a command that outputs files in directory
+ */
 class LsCommand(override val args: List<String>) : Command {
+    /**
+     * Executes `ls` command
+     *
+     * @param input the input stream
+     * @param out the output stream
+     * @param error the error stream
+     * @param environment the environment of process
+     *
+     * @return the execution code
+     */
     override fun execute(
         input: InputStream,
         out: OutputStream,
