@@ -3,7 +3,11 @@ package ru.cli.commands
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import ru.cli.Environment
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.InputStream
+import java.io.PipedInputStream
+import java.io.PipedOutputStream
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
 import kotlin.io.path.readText
