@@ -63,7 +63,7 @@ class CatCommandTest {
     fun useCurrentPathTest() {
         val expected = listOf(File("src/test/resources/forest-gump.txt").readText(Charsets.UTF_8), "")
 
-        val tested = calculate(listOf("resources/forest-gump.txt"), Environment(currentPath = File("src/test")))
+        val tested = calculate(listOf("resources/forest-gump.txt"), Environment(workingDir = File("src/test")))
         Assertions.assertEquals(expected, tested)
     }
 }

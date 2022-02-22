@@ -59,7 +59,7 @@ class ExternalCommandTest {
         val expected = File("src/test/resources/python-print.out").readText()
         val tested = calculate(
             listOf("python3", "resources/print.py"),
-            Environment(currentPath = File("src/test"))
+            Environment(workingDir = File("src/test"))
         ).first
         Assertions.assertEquals(expected, tested)
     }

@@ -40,8 +40,8 @@ class PwdCommandTest {
 
     @Test
     fun differentEnvironment() {
-        val environment = Environment(currentPath = File("src"))
+        val environment = Environment(workingDir = File("src"))
         val tested = calculate(listOf(), environment = environment)
-        Assertions.assertEquals(environment.currentPath.path + System.lineSeparator(), tested)
+        Assertions.assertEquals(environment.workingDir.path + System.lineSeparator(), tested)
     }
 }

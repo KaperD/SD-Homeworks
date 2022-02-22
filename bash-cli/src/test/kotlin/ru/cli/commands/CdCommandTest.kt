@@ -35,23 +35,23 @@ class CdCommandTest {
     @Test
     fun testCorrectCd() {
         val environment = Environment()
-        val startDir = environment.currentPath
+        val startDir = environment.workingDir
         val (output, error, returnCode) = calculate(listOf("src"), environment)
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals(0, output.length)
         assertEquals(0, error.length)
-        assertEquals(startDir.resolve("src"), environment.currentPath)
+        assertEquals(startDir.resolve("src"), environment.workingDir)
     }
 
     @Test
     fun testCorrectCdToThisFolder() {
         val environment = Environment()
-        val startDir = environment.currentPath
+        val startDir = environment.workingDir
         val (output, error, returnCode) = calculate(listOf("."), environment)
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals(0, output.length)
         assertEquals(0, error.length)
-        assertEquals(startDir, environment.currentPath)
+        assertEquals(startDir, environment.workingDir)
     }
 
     @Test
@@ -61,18 +61,18 @@ class CdCommandTest {
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals(0, output.length)
         assertEquals(0, error.length)
-        assertEquals(File(System.getProperty("user.home")), environment.currentPath)
+        assertEquals(File(System.getProperty("user.home")), environment.workingDir)
     }
 
     @Test
     fun testCorrectWeirdCd() {
         val environment = Environment()
-        val startDir = environment.currentPath
+        val startDir = environment.workingDir
         val (output, error, returnCode) = calculate(listOf("././src/./main/../"), environment)
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals(0, output.length)
         assertEquals(0, error.length)
-        assertEquals(startDir.resolve("src"), environment.currentPath)
+        assertEquals(startDir.resolve("src"), environment.workingDir)
     }
 
     @Test
@@ -82,39 +82,39 @@ class CdCommandTest {
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals(0, output.length)
         assertEquals(0, error.length)
-        assertEquals(File("/"), environment.currentPath)
+        assertEquals(File("/"), environment.workingDir)
     }
 
     @Test
     fun testWrongNumberOfArguments() {
         val environment = Environment()
-        val startDir = environment.currentPath
+        val startDir = environment.workingDir
         val (output, error, returnCode) = calculate(listOf("src", "a"), environment)
         assertEquals(ReturnCode(StatusCode.ERROR, 1), returnCode)
         assertEquals(0, output.length)
         assertEquals("Wrong number of args for cd command: expected 0 or 1${System.lineSeparator()}", error)
-        assertEquals(startDir, environment.currentPath)
+        assertEquals(startDir, environment.workingDir)
     }
 
     @Test
     fun testCdToFile() {
         val environment = Environment()
-        val startDir = environment.currentPath
+        val startDir = environment.workingDir
         val (output, error, returnCode) = calculate(listOf("README.md"), environment)
         assertEquals(ReturnCode(StatusCode.ERROR, 1), returnCode)
         assertEquals(0, output.length)
         assertEquals("README.md is not a directory${System.lineSeparator()}", error)
-        assertEquals(startDir, environment.currentPath)
+        assertEquals(startDir, environment.workingDir)
     }
 
     @Test
     fun testCdToNotExistingFile() {
         val environment = Environment()
-        val startDir = environment.currentPath
+        val startDir = environment.workingDir
         val (output, error, returnCode) = calculate(listOf("AoAoA"), environment)
         assertEquals(ReturnCode(StatusCode.ERROR, 1), returnCode)
         assertEquals(0, output.length)
         assertEquals("AoAoA no such file or directory${System.lineSeparator()}", error)
-        assertEquals(startDir, environment.currentPath)
+        assertEquals(startDir, environment.workingDir)
     }
 }

@@ -35,7 +35,7 @@ class LsCommandTest {
 
     @Test
     fun testLsWithoutArgs() {
-        val environment = Environment(currentPath = File("src/main/kotlin"))
+        val environment = Environment(workingDir = File("src/main/kotlin"))
         val (output, error, returnCode) = calculate(listOf(), environment)
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals("ru${lineSeparator()}", output)
@@ -44,7 +44,7 @@ class LsCommandTest {
 
     @Test
     fun testLsToThisFolder() {
-        val environment = Environment(currentPath = File("src/main/kotlin"))
+        val environment = Environment(workingDir = File("src/main/kotlin"))
         val (output, error, returnCode) = calculate(listOf("."), environment)
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals("ru${lineSeparator()}", output)

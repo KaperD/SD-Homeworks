@@ -44,7 +44,7 @@ class GrepCommand(override val args: List<String>) : Command {
             override fun run() {
                 var inp = input
                 source?.let {
-                    val path = environment.currentPath.resolve(it)
+                    val path = environment.workingDir.resolve(it)
                     if (!path.exists()) {
                         error.write("$source no such file or directory${lineSeparator()}".toByteArray())
                         returnCode = ReturnCode(StatusCode.ERROR, 1)

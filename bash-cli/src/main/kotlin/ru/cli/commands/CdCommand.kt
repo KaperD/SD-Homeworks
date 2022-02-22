@@ -30,13 +30,13 @@ class CdCommand(override val args: List<String>) : Command {
         environment: Environment
     ): ReturnCode = when (args.size) {
         0 -> {
-            environment.currentPath = homeDir
+            environment.workingDir = homeDir
             ReturnCode(StatusCode.SUCCESS, 0)
         }
         1 -> {
-            val newPath = environment.currentPath.resolve(args[0]).canonicalFile
+            val newPath = environment.workingDir.resolve(args[0]).canonicalFile
             if (newPath.isDirectory) {
-                environment.currentPath = newPath
+                environment.workingDir = newPath
                 ReturnCode(StatusCode.SUCCESS, 0)
             } else if (newPath.exists()) {
                 error.write("${args[0]} is not a directory${lineSeparator()}".toByteArray())

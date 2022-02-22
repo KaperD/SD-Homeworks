@@ -29,7 +29,7 @@ class WcCommand(override val args: List<String>) : Command {
 
         val totalStatistics = Statistics()
         for (arg in args) {
-            val text = String(environment.currentPath.resolve(arg).inputStream().readAllBytes())
+            val text = String(environment.workingDir.resolve(arg).inputStream().readAllBytes())
             val statistics = getStatistics(text)
             totalStatistics += statistics
             writeStatistics(out, statistics, arg)

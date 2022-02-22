@@ -84,7 +84,7 @@ class GrepCommandTest {
         val expectedOutputString = Path("src", "test", "resources", "grep-test-01.out").readText()
         val actualOutputString = calculate(
             listOf("lol|aboba", pathInput.pathString),
-            environment = Environment(currentPath = File("src/test"))
+            environment = Environment(workingDir = File("src/test"))
         )
         Assertions.assertEquals(expectedOutputString, actualOutputString)
     }

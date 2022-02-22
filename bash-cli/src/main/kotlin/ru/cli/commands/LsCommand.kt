@@ -28,11 +28,11 @@ class LsCommand(override val args: List<String>) : Command {
         environment: Environment
     ): ReturnCode = when (args.size) {
         0 -> {
-            out.printDir(environment.currentPath)
+            out.printDir(environment.workingDir)
             ReturnCode(StatusCode.SUCCESS, 0)
         }
         1 -> {
-            val file = environment.currentPath.resolve(args[0])
+            val file = environment.workingDir.resolve(args[0])
             if (!file.exists() || !file.canRead()) {
                 error.write("${args[0]} no such file or directory${lineSeparator()}".toByteArray())
                 ReturnCode(StatusCode.ERROR, 1)

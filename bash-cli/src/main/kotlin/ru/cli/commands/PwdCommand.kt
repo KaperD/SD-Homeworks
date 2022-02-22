@@ -20,7 +20,7 @@ class PwdCommand(override val args: List<String>) : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream, environment: Environment): ReturnCode {
-        out.write("${environment.currentPath.path}${System.lineSeparator()}".toByteArray())
+        out.write("${environment.workingDir.path}${System.lineSeparator()}".toByteArray())
         return ReturnCode(StatusCode.SUCCESS, 0)
     }
 }

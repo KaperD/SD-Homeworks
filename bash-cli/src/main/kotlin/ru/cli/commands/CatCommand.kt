@@ -26,7 +26,7 @@ class CatCommand(override val args: List<String>) : Command {
         }
 
         for (filename in args) {
-            val file = environment.currentPath.resolve(filename)
+            val file = environment.workingDir.resolve(filename)
             if (file.exists()) {
                 out.write(file.readBytes())
             } else {

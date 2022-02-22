@@ -8,9 +8,9 @@ import java.io.File
  */
 data class Environment(
     val vars: MutableMap<String, String> = HashMap(),
-    var currentPath: File = File("").absoluteFile
+    var workingDir: File = File("").absoluteFile
 ) {
     init {
-        assert(currentPath.isDirectory)
+        assert(workingDir.isDirectory)
     }
 }

@@ -21,7 +21,7 @@ class ExternalCommand(override val args: List<String>) : Command {
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream, environment: Environment): ReturnCode {
         val processBuilder = ProcessBuilder(args).apply {
             environment().putAll(environment.vars)
-            directory(environment.currentPath)
+            directory(environment.workingDir)
         }
 
         if (input == System.`in`) {

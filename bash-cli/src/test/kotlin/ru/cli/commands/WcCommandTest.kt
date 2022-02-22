@@ -86,7 +86,7 @@ class WcCommandTest {
 
         val tested = calculate(
             listOf(Path("resources", "lorem-ipsum.txt").pathString),
-            environment = Environment(currentPath = File("src/test"))
+            environment = Environment(workingDir = File("src/test"))
         )
         Assertions.assertEquals(expected, tested)
     }
