@@ -8,7 +8,7 @@ import java.io.PipedInputStream
 import java.io.PipedOutputStream
 
 class CatCommandTest {
-    private fun calculate(args: List<String>): List<String> {
+    private fun calculate(args: List<String>, environment: Environment = Environment()): List<String> {
         val command = CatCommand(args)
         val commandInput = PipedOutputStream()
         val commandOutput = PipedInputStream()
@@ -18,7 +18,7 @@ class CatCommandTest {
         val out = PipedOutputStream(commandOutput)
         val error = PipedOutputStream(commandError)
 
-        command.execute(input, out, error, Environment())
+        command.execute(input, out, error, environment)
         input.close()
         out.close()
         error.close()
@@ -56,6 +56,14 @@ class CatCommandTest {
     fun multipleFilesErrorTest() {
         val expected = listOf(File("src/test/resources/forest-gump.txt").readText(Charsets.UTF_8), "bwrg: No such file or directory")
         val tested = calculate(listOf("src/test/resources/forest-gump.txt", "bwrg"))
+        Assertions.assertEquals(expected, tested)
+    }
+
+    @Test
+    fun useCurrentPathTest() {
+        val expected = listOf(File("src/test/resources/forest-gump.txt").readText(Charsets.UTF_8), "")
+
+        val tested = calculate(listOf("resources/forest-gump.txt"), Environment(currentPath = File("src/test")))
         Assertions.assertEquals(expected, tested)
     }
 }

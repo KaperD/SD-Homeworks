@@ -11,6 +11,7 @@ import com.github.ajalt.clikt.parameters.types.int
 import ru.cli.Environment
 import java.io.InputStream
 import java.io.OutputStream
+import java.lang.System.lineSeparator
 
 /**
  * This class provides `grep` unix command functionality.
@@ -39,12 +40,28 @@ class GrepCommand(override val args: List<String>) : Command {
             val isFullMatch by option("-w").flag()
             val A: Int by option("-A").int().default(0)
             val regexStr by argument()
-            val source by argument().file(mustExist = true, canBeDir = false).optional()
+            val source by argument().optional()
 
             override fun run() {
                 var inp = input
-                if (source != null) {
-                    inp = source!!.inputStream()
+                source?.let {
+                    val path = environment.currentPath.resolve(it)
+                    if (!path.exists()) {
+                        error.write("$source no such file or directory${lineSeparator()}".toByteArray())
+                        returnCode = ReturnCode(StatusCode.ERROR, 1)
+                        return
+                    }
+                    if (!path.isFile) {
+                        error.write("$source is not a file${lineSeparator()}".toByteArray())
+                        returnCode = ReturnCode(StatusCode.ERROR, 1)
+                        return
+                    }
+                    if (!path.canRead()) {
+                        error.write("$source cannot be read${lineSeparator()}".toByteArray())
+                        returnCode = ReturnCode(StatusCode.ERROR, 1)
+                        return
+                    }
+                    inp = path.inputStream()
                 }
                 val regex =
                     if (isInsetiveCase) {

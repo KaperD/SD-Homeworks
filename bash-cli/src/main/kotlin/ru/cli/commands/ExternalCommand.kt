@@ -19,11 +19,9 @@ class ExternalCommand(override val args: List<String>) : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream, environment: Environment): ReturnCode {
-        val processBuilder = ProcessBuilder(args)
-        processBuilder.environment().let { env ->
-            environment.vars.forEach {
-                env[it.key] = it.value
-            }
+        val processBuilder = ProcessBuilder(args).apply {
+            environment().putAll(environment.vars)
+            directory(environment.currentPath)
         }
 
         if (input == System.`in`) {

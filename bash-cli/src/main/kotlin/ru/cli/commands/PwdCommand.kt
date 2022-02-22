@@ -20,11 +20,7 @@ class PwdCommand(override val args: List<String>) : Command {
      * @return the execution code
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream, environment: Environment): ReturnCode {
-        out.write(getCurrentDirectory().toByteArray())
+        out.write("${environment.currentPath.path}${System.lineSeparator()}".toByteArray())
         return ReturnCode(StatusCode.SUCCESS, 0)
-    }
-
-    private fun getCurrentDirectory(): String {
-        return System.getProperty("user.dir") + System.lineSeparator()
     }
 }
