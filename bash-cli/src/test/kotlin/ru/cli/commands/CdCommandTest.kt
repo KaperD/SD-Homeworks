@@ -78,11 +78,12 @@ class CdCommandTest {
     @Test
     fun testCorrectAbsoluteCd() {
         val environment = Environment()
-        val (output, error, returnCode) = calculate(listOf("/"), environment)
+        val expectedDir = File("src").absoluteFile
+        val (output, error, returnCode) = calculate(listOf(expectedDir.absolutePath), environment)
         assertEquals(ReturnCode(StatusCode.SUCCESS, 0), returnCode)
         assertEquals(0, output.length)
         assertEquals(0, error.length)
-        assertEquals(File("/"), environment.workingDir)
+        assertEquals(expectedDir, environment.workingDir)
     }
 
     @Test
