@@ -9,9 +9,7 @@ import java.io.PipedOutputStream
 import kotlin.test.assertEquals
 
 class ExternalCommandTest {
-    private val environment = Environment()
-
-    private fun calculate(args: List<String>): Pair<String, String> {
+    private fun calculate(args: List<String>, environment: Environment = Environment()): Pair<String, String> {
         val command = ExternalCommand(args)
         val commandInput = PipedOutputStream()
         val commandOutput = PipedInputStream()
@@ -46,10 +44,23 @@ class ExternalCommandTest {
 
     @Test
     fun pythonEnvironment() {
-        environment.vars["key"] = "value"
         val expected = File("src/test/resources/python-environment.out").readText()
-        val tested = calculate(listOf("python3", "src/test/resources/python-environment.py")).first
+        val tested = calculate(
+            listOf("python3", "src/test/resources/python-environment.py"),
+            Environment().apply {
+                vars["key"] = "value"
+            }
+        ).first
         assertEquals(expected, tested)
-        environment.vars.remove("key")
+    }
+
+    @Test
+    fun useCurrentPath() {
+        val expected = File("src/test/resources/python-print.out").readText()
+        val tested = calculate(
+            listOf("python3", "resources/print.py"),
+            Environment(workingDir = File("src/test"))
+        ).first
+        Assertions.assertEquals(expected, tested)
     }
 }

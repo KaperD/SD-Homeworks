@@ -1,7 +1,6 @@
 package ru.cli.commands
 
 import ru.cli.Environment
-import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -27,7 +26,7 @@ class CatCommand(override val args: List<String>) : Command {
         }
 
         for (filename in args) {
-            val file = File(filename)
+            val file = environment.workingDir.resolve(filename)
             if (file.exists()) {
                 out.write(file.readBytes())
             } else {

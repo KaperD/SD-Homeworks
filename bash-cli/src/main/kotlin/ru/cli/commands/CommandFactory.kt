@@ -14,7 +14,9 @@ class CommandFactory {
         "cat" to ::CatCommand,
         "echo" to ::EchoCommand,
         "exit" to ::ExitCommand,
-        "grep" to ::GrepCommand
+        "grep" to ::GrepCommand,
+        "ls" to ::LsCommand,
+        "cd" to ::CdCommand
     )
 
     /**

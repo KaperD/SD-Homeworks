@@ -3,6 +3,7 @@ package ru.cli.commands
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import ru.cli.Environment
+import java.io.File
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
 import kotlin.io.path.Path
@@ -10,7 +11,7 @@ import kotlin.io.path.pathString
 import kotlin.io.path.readText
 
 class WcCommandTest {
-    private fun calculate(files: List<String>): String {
+    private fun calculate(files: List<String>, environment: Environment = Environment()): String {
         val command = WcCommand(files)
         val commandInput = PipedOutputStream()
         val commandOutput = PipedInputStream()
@@ -20,7 +21,7 @@ class WcCommandTest {
         val out = PipedOutputStream(commandOutput)
         val error = PipedOutputStream(commandError)
 
-        command.execute(input, out, error, Environment())
+        command.execute(input, out, error, environment)
         out.close()
 
         return String(commandOutput.readAllBytes())
@@ -66,6 +67,26 @@ class WcCommandTest {
                 Path("src", "test", "resources", "lorem-ipsum.txt").pathString,
                 Path("src", "test", "resources", "forest-gump.txt").pathString
             )
+        )
+        Assertions.assertEquals(expected, tested)
+    }
+
+    @Test
+    fun useCurrentPathTest() {
+        val os = System.getProperty("os.name")
+        val expected = if (os.indexOf("win", ignoreCase = true) >= 0) {
+            Path("src", "test", "resources", "wc-windows-lorem-ipsum.out")
+                .readText()
+                .replace("src\\test\\", "")
+        } else {
+            Path("src", "test", "resources", "wc-unix-lorem-ipsum.out")
+                .readText()
+                .replace("src/test/", "")
+        }
+
+        val tested = calculate(
+            listOf(Path("resources", "lorem-ipsum.txt").pathString),
+            environment = Environment(workingDir = File("src/test"))
         )
         Assertions.assertEquals(expected, tested)
     }
